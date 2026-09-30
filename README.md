@@ -1,7 +1,9 @@
 # FoodAPP: Food ordering app
 
+```text
 A simple responsive food website built with React and Tailwind CSS.
 Backend is on its way.......
+```
 
 ## Features
 
