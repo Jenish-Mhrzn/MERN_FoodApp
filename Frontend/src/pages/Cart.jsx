@@ -7,6 +7,7 @@ import Category from "../components/Category";
 import Footer from "../components/Footer";
 import Newsletter from "../components/Newsletter";
 
+
 const Cart = () => {
   const Products = useSelector((state) => state.products.cartItems);
   console.log(Products);
