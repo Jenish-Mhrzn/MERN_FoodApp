@@ -1,6 +1,7 @@
 import express from "express";
 import connectDB from "./config/db.js";
 import FoodModel from "./model/FoodModel.js";
+import EmailModel from "./model/EmailModel.js";
 import multer from "multer";
 import path from "path";
 import cors from "cors";
@@ -66,7 +67,6 @@ app.post("/food", upload.single("image"), async (req, res) => {
   }
 });
 
-
 //delete api
 app.delete("/food/:id", async (req, res) => {
   const { id } = req.params;
@@ -95,6 +95,8 @@ app.delete("/food/:id", async (req, res) => {
     });
   }
 });
+
+
 
 app.listen(5000, () => {
   console.log("Server is listening on port:5000...");
