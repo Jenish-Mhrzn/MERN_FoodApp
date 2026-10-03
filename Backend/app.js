@@ -96,6 +96,12 @@ app.delete("/food/:id", async (req, res) => {
   }
 });
 
+//get api for email
+app.get("/email", async (req, res) => {
+  const data = await EmailModel.find({});
+  res.status(200).json({ success: true, data });
+});
+
 
 
 app.listen(5000, () => {
