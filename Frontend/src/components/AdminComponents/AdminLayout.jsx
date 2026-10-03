@@ -5,7 +5,7 @@ import Sidebar from "./Sidebar";
 const pageTitles = {
   "/admin": "Add Product",
   "/admin/products": "Products Lists",
-  "/admin/subscribe": "Subscribe lists",
+  "/admin/subscribe": "Subscriber lists",
 };
 
 const AdminLayout = () => {
@@ -18,8 +18,8 @@ const AdminLayout = () => {
     <div className="flex flex-row h-screen ">
       <Sidebar sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} />
 
-      <main className="flex-1  overflow-y-auto">
-        <header className="flex sticky top-0 z-10 justify-between items-center p-4 ">
+      <main className="flex-1  overflow-y-auto ">
+        <header className="flex sticky bg-white border-b top-0 z-10 justify-between items-center p-4 ">
           <button
             className="p-2 text-xl font-bold lg:hidden"
             onClick={() => setSideBarOpen(!sideBarOpen)}

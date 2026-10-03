@@ -1,12 +1,13 @@
 import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FaSun, FaMoon, FaFolder, FaRegCalendarAlt } from "react-icons/fa";
+import { FaFolder } from "react-icons/fa";
+import { IoIosNotifications } from "react-icons/io";
 import { MdDashboard } from "react-icons/md";
 
 const navItems = [
   { to: "/admin", label: "Admin", icon: MdDashboard, exact: true },
   { to: "/admin/products", label: "Products", icon: FaFolder },
-  { to: "/admin/subscribe", label: "Subscribe", icon: FaRegCalendarAlt },
+  { to: "/admin/subscribe", label: "Subscribe", icon: IoIosNotifications },
 ];
 
 const Sidebar = ({ sideBarOpen, setSideBarOpen }) => {
@@ -16,7 +17,7 @@ const Sidebar = ({ sideBarOpen, setSideBarOpen }) => {
       } ${sideBarOpen ? "translate-x-0" : "-translate-x-70"} lg:translate-x-0 lg:static z-20`}
     >
       <div className="flex justify-between items-center p-2 py-3 ">
-        <h1 className="font-bold text-2xl mb-2 mt-1">Logo</h1>
+        <h1 className="font-bold text-2xl mb-2 mt-1 ">Admin Panel</h1>
         <button
           className="text-4xl lg:hidden mb-2 mt-1"
           onClick={() => setSideBarOpen(false)}

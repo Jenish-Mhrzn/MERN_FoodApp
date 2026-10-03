@@ -28,7 +28,7 @@ const Approutes = () => {
                 <Navbar />
                 <Hero />
                 <HeadlineCards />
-                <Food />
+                <Food/>
                 <Category />
                 <Newsletter />
                 <Footer />

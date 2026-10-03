@@ -1,11 +1,27 @@
 import React, { useState } from "react";
-import { data } from "../data/data";
+import { useEffect } from "react";
+import { data } from "../data/data.js";
+import axios from "axios";
+
 import { Link } from "react-router-dom";
 
 const Food = () => {
   const [type, setType] = useState("All");
   const [price, setPrice] = useState("All");
+  // const [data, setData] = useState([]);
 
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await axios.get("http://localhost:5000/food");
+  //     setData(response.data.data);
+  //     console.log(response.data.data);
+  //   } catch (err) {
+  //     console.log("Error while fetching", err);
+  //   }
+  // };
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
   return (
     <div className="max-w-[1640px] mx-auto px-4 py-12" id="food">
       <h1 className="text-4xl font-bold text-center text-orange-500">
@@ -132,6 +148,7 @@ const Food = () => {
                 className=" border-white shadow-sm hover:scale-105 duration-300 rounded-t-xl"
               >
                 <img
+                  // src={`http://localhost:5000/images/${item.image}`}
                   src={item.image}
                   alt=""
                   className="w-full h-[200px] object-cover rounded-t-xl"
