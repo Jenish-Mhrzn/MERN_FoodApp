@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 const Newsletter = () => {
   const [email, setEmail] = useState("");
- 
+  
   return (
     <div className="px-5">
       {" "}
