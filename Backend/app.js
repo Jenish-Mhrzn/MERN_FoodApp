@@ -103,6 +103,41 @@ app.get("/email", async (req, res) => {
 });
 
 
+// GET email by ID
+app.get("/email/:id", async (req, res) => {
+  const data = await EmailModel.findById(req.params.id);
+
+  res.status(200).json({
+    success: true,
+    data,
+  });
+});
+
+
+// POST email
+app.post("/email", async (req, res) => {
+  const data = new EmailModel({
+    email: req.body.email,
+  });
+
+  await data.save();
+
+  res.status(201).json({
+    success: true,
+    data,
+  });
+});
+
+
+// DELETE email by ID
+app.delete("/email/:id", async (req, res) => {
+  const data = await EmailModel.findByIdAndDelete(req.params.id);
+
+  res.status(200).json({
+    success: true,
+    data,
+  });
+});
 
 app.listen(5000, () => {
   console.log("Server is listening on port:5000...");
