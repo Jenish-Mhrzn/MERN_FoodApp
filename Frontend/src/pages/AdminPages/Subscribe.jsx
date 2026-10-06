@@ -2,7 +2,24 @@ import React, { useState } from "react";
 import axios from "axios";
 const Newsletter = () => {
   const [email, setEmail] = useState("");
-  
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post("http://localhost:5000/email", {
+        email: email,
+      });
+      if (response.data.success) {
+        alert("Successfully subscribed");
+        console.log("Successfully created");
+        setEmail("");
+      }
+    } catch (err) {
+      console.log("Error while creating:", err);
+    }
+  };
+
   return (
     <div className="px-5">
       {" "}
