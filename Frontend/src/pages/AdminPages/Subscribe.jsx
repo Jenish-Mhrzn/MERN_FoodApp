@@ -1,55 +1,62 @@
-import React, { useState } from "react";
 import axios from "axios";
-const Newsletter = () => {
-  const [email, setEmail] = useState("");
+import { useEffect, useState } from "react";
+import SubsTableItem from "../../components/AdminComponents/SubsTableItem";
 
-  const onSubmitHandler = async (e) => {
-    e.preventDefault();
+const Subscribe = () => {
+  const [data, setData] = useState([]);
 
-    try {
-      const response = await axios.post("http://localhost:5000/email", {
-        email: email,
-      });
-      if (response.data.success) {
-        alert("Successfully subscribed");
-        console.log("Successfully created");
-        setEmail("");
-      }
-    } catch (err) {
-      console.log("Error while creating:", err);
-    }
+  const fetchEmailData = async () => {
+    const response = await axios.get("http://localhost:5000/email");
+    setData(response.data.data);
+    // console.log(response.data);
   };
 
+  const deleteEmail = async (mongoId) => {
+    const response = await axios.delete(
+      `http://localhost:5000/email/${mongoId}`,
+    );
+    console.log(response.data.data);
+    fetchEmailData();
+  };
+  useEffect(() => {
+    fetchEmailData();
+  }, []);
   return (
-    <div className="px-5">
-      {" "}
-      <div className="w-full min-h-[40vh] flex flex-col px-5 items-center justify-center mx-auto mb-20 sm:mb-28 lg:mb-[150px] sm:px-10 lg:px-[140px] gap-5 sm:gap-6 lg:gap-[30px] bg-gradient-to-b from-[#fde1ff] to-[#e1ffea22]">
-        {" "}
-        <p> Subscribe to our newsletter and stay updated </p>{" "}
-        <form
-          className="flex items-center justify-center w-full max-w-[730px] h-[40px] sm:h-[50px] lg:h-[55px] rounded-full border border-[#e3e3e3] overflow-hidden"
-          onSubmit={onSubmitHandler}
-        >
-          {" "}
-          <input
-            name="subscribe"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-            placeholder="Your Email id"
-            className="flex-1 min-w-0 h-full px-4 sm:px-6 lg:px-8 border-none outline-none text-[#616161] text-sm sm:text-base lg:text-[22px] bg-transparent"
-            required
-          />{" "}
-          <button
-            type="submit"
-            className="w-[120px] sm:w-[150px] lg:w-[210px] h-full rounded-full bg-black text-white text-sm sm:text-base cursor-pointer shrink-0"
-          >
-            {" "}
-            Subscribe{" "}
-          </button>{" "}
-        </form>{" "}
-      </div>{" "}
+    <div className="flex-1 pt-5 px-5 sm:pl-16 sm:pt-12">
+      <h1>All Subscriptions</h1>
+      <div className="relative h-[70vh] max-w-[700px] mt-4 overflow-x-auto border border-gray-400 scrollbar-hide">
+        <table className="w-full text-sm text-gray-500 ">
+          <thead className="text-sm text-gray-500 text-left uppercase bg-gray-400 sticky top-0">
+            <tr>
+              <th scope="col" className="px-6 py-3">
+                Email Subscription
+              </th>
+              <th scope="col" className="hidden sm:block px-6 py-3">
+                Date
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((item, index) => {
+              return (
+                <SubsTableItem
+                  key={item._id}
+                  mongoId={item._id}
+                  email={item.email}
+                  date={item.date}
+                  deleteEmail={deleteEmail}
+                  showBorder={index + 1 !== data.length}
+                />
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
-export default Newsletter;
+
+export default Subscribe;
