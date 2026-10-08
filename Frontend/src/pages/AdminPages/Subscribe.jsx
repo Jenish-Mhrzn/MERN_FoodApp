@@ -31,9 +31,11 @@ const Subscribe = () => {
               <th scope="col" className="px-6 py-3">
                 Email Subscription
               </th>
-              <th scope="col" className="hidden sm:block px-6 py-3">
+
+              <th scope="col" className="hidden sm:table-cell px-6 py-3">
                 Date
               </th>
+
               <th scope="col" className="px-6 py-3">
                 Action
               </th>
