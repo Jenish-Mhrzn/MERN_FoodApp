@@ -58,6 +58,7 @@ const page = () => {
                   foodImg={item.image}
                   mongoId={item._id}
                   deleteFood={deleteFood}
+                  showBorder={index + 1 !== foods.length}
                 />
               );
             })}

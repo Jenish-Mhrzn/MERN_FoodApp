@@ -7,9 +7,10 @@ const FoodTableItems = ({
   foodImg,
   mongoId,
   deleteFood,
+  showBorder,
 }) => {
   return (
-    <tr className="bg-white border-b">
+    <tr className={`bg-white ${showBorder ? "border-b" : ""}`}>
       {/* Image */}
       <td className="px-6 py-4">
         <img
