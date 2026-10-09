@@ -1,11 +1,15 @@
 import express from "express";
 import connectDB from "./config/db.js";
-import FoodModel from "./model/FoodModel.js";
-import EmailModel from "./model/EmailModel.js";
-import multer from "multer";
-import path from "path";
 import cors from "cors";
-import fs from "fs";
+import EmailModel from "./model/EmailModel.js";
+
+import {
+  createFood,
+  deleteFoodById,
+  getFood,
+  getFoodById,
+  upload,
+} from "./controller/FoodController.js";
 
 const app = express();
 app.use(express.json());
@@ -14,94 +18,24 @@ app.use(cors());
 await connectDB();
 
 //get api
-app.get("/food", async (req, res) => {
-  const data = await FoodModel.find({});
-  res.status(200).send({ success: true, data });
-});
+app.get("/food", getFood);
 
 //get food by id
-app.get("/food/:id", async (req, res) => {
-  const { id } = req.params;
-  const food = await FoodModel.findById(id);
-  if (!food) {
-    res.status(400).json({ success: false, message: "Food not found" });
-  }
-  res.status(200).json({ status: true, food });
-});
+app.get("/food/:id", getFoodById);
 
 //post api
-const storage = multer.diskStorage({
-  destination: "uploads/",
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}${path.extname(file.originalname)}`);
-  },
-});
-const upload = multer({ storage });
-
 // serve uploaded images
 app.use("/images", express.static("uploads"));
-
-app.post("/food", upload.single("image"), async (req, res) => {
-  try {
-    const { name, category, price, description } = req.body;
-
-    if (!name || !category || !price || !req.file || !description) {
-      return res.status(400).json({
-        success: false,
-        message: "Please provide name, image, category, description and price",
-      });
-    }
-
-    const data = await FoodModel.create({
-      name,
-      category,
-      price,
-      image: req.file.filename,
-      description,
-    });
-
-    res.status(200).json({ success: true, data });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Server error" });
-  }
-});
+app.post("/food", upload.single("image"), createFood);
 
 //delete api
-app.delete("/food/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const food = await FoodModel.findById(id);
-    if (!food) {
-      res.status(404).json({ success: false, message: "Food not found" });
-    }
-
-    const imagepath = path.join("uploads", food.image);
-    if (fs.existsSync(imagepath)) {
-      fs.unlinkSync(imagepath);
-    }
-
-    await FoodModel.findByIdAndDelete(id);
-    res.status(200).json({
-      success: true,
-      message: "Deleted successfully",
-    });
-  } catch (err) {
-    console.error(error);
-
-    res.status(500).json({
-      success: false,
-      message: "Server error",
-    });
-  }
-});
+app.delete("/food/:id", deleteFoodById);
 
 //get api for email
 app.get("/email", async (req, res) => {
   const data = await EmailModel.find({});
   res.status(200).json({ success: true, data });
 });
-
 
 // GET email by ID
 app.get("/email/:id", async (req, res) => {
@@ -112,7 +46,6 @@ app.get("/email/:id", async (req, res) => {
     data,
   });
 });
-
 
 // POST email
 app.post("/email", async (req, res) => {
@@ -127,7 +60,6 @@ app.post("/email", async (req, res) => {
     data,
   });
 });
-
 
 // DELETE email by ID
 app.delete("/email/:id", async (req, res) => {
