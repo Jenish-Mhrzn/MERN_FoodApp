@@ -3,18 +3,12 @@ import connectDB from "./config/db.js";
 import cors from "cors";
 
 import {
-  createFood,
-  deleteFoodById,
-  getFood,
-  getFoodById,
-  upload,
-} from "./controller/FoodController.js";
-import {
   createEmail,
   deleteEmailById,
   getEmail,
   getEmailById,
 } from "./controller/EmailController.js";
+import food from "./routes/FoodRoute.js";
 
 const app = express();
 app.use(express.json());
@@ -22,19 +16,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 await connectDB();
 
-//get api
-app.get("/food", getFood);
-
-//get food by id
-app.get("/food/:id", getFoodById);
+app.use("/food", food);
 
 //post api
 // serve uploaded images
 app.use("/images", express.static("uploads"));
-app.post("/food", upload.single("image"), createFood);
-
-//delete api
-app.delete("/food/:id", deleteFoodById);
 
 //get api for email
 app.get("/email", getEmail);
