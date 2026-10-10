@@ -73,7 +73,7 @@ const Addproducts = () => {
             value={data.name}
             onChange={handleChange}
             type="text"
-            placeholder="Enter product name"
+            placeholder="Enter food name"
             className="border rounded-xl p-3 outline-none"
             required
           />
@@ -97,7 +97,7 @@ const Addproducts = () => {
             value={data.category}
             onChange={handleChange}
             type="text"
-            placeholder="Enter product name"
+            placeholder="Enter food category in lowercase"
             className="border rounded-xl p-3 outline-none"
             required
           />
@@ -112,7 +112,7 @@ const Addproducts = () => {
             onChange={handleChange}
             type="number"
             min="1"
-            placeholder="Enter product name"
+            placeholder="Enter food price"
             className="border rounded-xl p-3 outline-none"
             required
           />
