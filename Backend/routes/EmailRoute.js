@@ -4,20 +4,20 @@ import {
   deleteEmailById,
   getEmail,
   getEmailById,
-} from "./controller/EmailController.js";
+} from "../controller/EmailController.js";
 
 const router = express.Router();
 
 //get api for email
-app.get("/", getEmail);
+router.get("/", getEmail);
 
 // GET email by ID
-app.get("/:id", getEmailById);
+router.get("/:id", getEmailById);
 
 // POST email
-app.post("/", createEmail);
+router.post("/", createEmail);
 
 // DELETE email by ID
-app.delete("/:id", deleteEmailById);
+router.delete("/:id", deleteEmailById);
 
 export default router;
