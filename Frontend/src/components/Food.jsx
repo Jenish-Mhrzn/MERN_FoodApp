@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
+import { AiOutlineSearch } from "react-icons/ai";
 
 import axios from "axios";
 
@@ -9,6 +10,7 @@ const Food = () => {
   const [type, setType] = useState("All");
   const [price, setPrice] = useState("All");
   const [data, setData] = useState([]);
+  const [search, setSearch] = useState("");
 
   const fetchData = async () => {
     try {
@@ -27,6 +29,17 @@ const Food = () => {
       <h1 className="text-4xl font-bold text-center text-orange-500">
         Top Rated Menu Items
       </h1>
+      {/* search input */}
+      <div className="flex bg-gray-200 rounded-full items-center px-2 mx-auto mt-8 w-[300px] sm:w-[400px] lg:w-[500px]">
+        <AiOutlineSearch size={25} />
+        <input
+          type="text"
+          placeholder="Search food and drinks"
+          className="p-2 outline-none w-full"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
 
       {/* filter row */}
       <div className="flex flex-col md:flex-row justify-between py-6 gap-4">
@@ -84,6 +97,16 @@ const Food = () => {
             >
               Chicken
             </button>
+            <button
+              className={
+                type === "drinks"
+                  ? "border px-3 py-1 rounded-lg bg-black text-white"
+                  : "border px-3 py-1 rounded-lg"
+              }
+              onClick={() => setType("drinks")}
+            >
+              Drink's
+            </button>
           </div>
         </div>
 
@@ -131,6 +154,9 @@ const Food = () => {
         {data
           .filter((item) => (type == "All" ? true : item.category == type))
           // .filter((item) => (price == "All" ? true : item.price == price))
+          .filter((item) =>
+            item.name.toLowerCase().includes(search.toLowerCase()),
+          )
           .sort((a, b) => {
             if (price === "Low") {
               return a.price - b.price;
@@ -142,11 +168,8 @@ const Food = () => {
             return 0;
           })
           .map((item) => (
-            <Link to={`/product/${item.id}`}>
-              <div
-                key={item.id}
-                className=" border-white shadow-sm hover:scale-105 duration-300 rounded-t-xl"
-              >
+            <Link to={`/product/${item.id}`} key={item.id}>
+              <div className=" border-white shadow-sm hover:scale-105 duration-300 rounded-t-xl">
                 <img
                   src={`http://localhost:5000/images/${item.image}`}
                   alt=""
