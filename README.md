@@ -1,15 +1,14 @@
 # FoodAPP: Food ordering app
 
-
 A simple responsive food website built with React and Tailwind CSS.<br>
 Backend is on its way.......
-
 
 ## Features
 
 - Browse food items
 - Filter food by category and price
-- View product details
+- Search foods by name
+- View products details
 - Add products to cart
 - Increase/decrease cart quantity
 - Remove products from cart
@@ -31,3 +30,4 @@ git clone https://github.com/Jenish-Mhrzn/MERN_FoodApp.git
 cd frontend
 npm install
 npm run dev
+```
