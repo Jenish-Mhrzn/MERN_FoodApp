@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const Food = () => {
   const [type, setType] = useState("All");
-  const [price, setPrice] = useState("All");
+  const [price, setPrice] = useState("default");
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
 
@@ -116,13 +116,13 @@ const Food = () => {
           <div className="flex gap-3 flex-wrap">
             <button
               className={
-                price === "All"
+                price === "default"
                   ? "border px-3 py-1 rounded-lg bg-black text-white"
                   : "border px-3 py-1 rounded-lg"
               }
-              onClick={() => setPrice("All")}
+              onClick={() => setPrice("default")}
             >
-              All
+              Default
             </button>
             <button
               className={
@@ -169,7 +169,7 @@ const Food = () => {
           })
           .map((item) => (
             <Link to={`/product/${item.id}`} key={item.id}>
-              <div className=" border-white shadow-sm hover:scale-105 duration-300 rounded-t-xl">
+              <div className=" border-white shadow-lg hover:scale-105 duration-300 rounded-t-xl">
                 <img
                   src={`http://localhost:5000/images/${item.image}`}
                   alt=""

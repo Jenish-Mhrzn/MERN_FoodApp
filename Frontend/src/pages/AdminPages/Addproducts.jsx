@@ -94,7 +94,7 @@ const Addproducts = () => {
           </select> */}
           <input
             name="category"
-            value={data.category}
+            value={data.category.toLowerCase()}
             onChange={handleChange}
             type="text"
             placeholder="Enter food category in lowercase"
