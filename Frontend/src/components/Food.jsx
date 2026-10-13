@@ -35,7 +35,10 @@ const Food = () => {
   }, []);
 
   return (
-    <div className="max-w-[1640px] mx-auto px-4 py-12" id="food">
+    <div
+      className="max-w-[1640px] mx-auto px-4 sm:px-8 lg:px-10 py-12"
+      id="food"
+    >
       <h1 className="text-4xl font-bold text-center text-orange-500">
         Top Rated Menu Items
       </h1>

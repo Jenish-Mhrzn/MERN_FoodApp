@@ -3,7 +3,7 @@ import { categories } from '../data/data'
 
 const Category = () => {
   return (
-      <div className='max-w-[1640px] mx-auto px-4 py-12'>
+      <div className='max-w-[1640px] mx-auto px-4 sm:px-8 lg:px-10 py-12'>
           <h1 className='font-bold text-4xl text-center text-orange-500 '>Top Rated Menu Items</h1>
           <div className='py-6 grid md:grid-cols-2 lg:grid-cols-4 gap-6'>
               {categories.map((item) => (

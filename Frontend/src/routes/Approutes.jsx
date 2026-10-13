@@ -18,7 +18,7 @@ import Subscribe from "../pages/AdminPages/Subscribe";
 const Approutes = () => {
   return (
     <div>
-      <div className="md:px-5 lg:px-10">
+      <div className="">
         <ScrollToTop />
         <Routes>
           <Route
