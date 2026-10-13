@@ -11,19 +11,29 @@ const Food = () => {
   const [price, setPrice] = useState("default");
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const fetchData = async () => {
     try {
+      setLoading(true);
+      setError("");
+
       const response = await axios.get("http://localhost:5000/food");
       setData(response.data.data);
       console.log(response.data.data);
     } catch (err) {
       console.log("Error while fetching", err);
+      setError("Failed to load food items. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
+
   return (
     <div className="max-w-[1640px] mx-auto px-4 py-12" id="food">
       <h1 className="text-4xl font-bold text-center text-orange-500">
@@ -150,41 +160,54 @@ const Food = () => {
       </div>
 
       {/* display food */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 ">
-        {data
-          .filter((item) => (type == "All" ? true : item.category == type))
-          // .filter((item) => (price == "All" ? true : item.price == price))
-          .filter((item) =>
-            item.name.toLowerCase().includes(search.toLowerCase()),
-          )
-          .sort((a, b) => {
-            if (price === "Low") {
-              return a.price - b.price;
-            }
-            if (price === "High") {
-              return b.price - a.price;
-            }
+      {loading ? (
+        <p className="text-center text-lg font-semibold py-10">
+          Loading food items...
+        </p>
+      ) : error ? (
+        <p className="text-center text-red-500 font-semibold py-10">
+          {error}
+          <button onClick={fetchData} className="ml-3 underline text-blue-600">
+            Try again
+          </button>
+        </p>
+      ) : (
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 ">
+          {data
+            .filter((item) => (type == "All" ? true : item.category == type))
+            // .filter((item) => (price == "All" ? true : item.price == price))
+            .filter((item) =>
+              item.name.toLowerCase().includes(search.toLowerCase()),
+            )
+            .sort((a, b) => {
+              if (price === "Low") {
+                return a.price - b.price;
+              }
+              if (price === "High") {
+                return b.price - a.price;
+              }
 
-            return 0;
-          })
-          .map((item) => (
-            <Link to={`/product/${item.id}`} key={item.id}>
-              <div className=" border-white shadow-lg hover:scale-105 duration-300 rounded-t-xl">
-                <img
-                  src={`http://localhost:5000/images/${item.image}`}
-                  alt=""
-                  className="w-full h-[200px] object-cover rounded-t-xl"
-                />
-                <div className="flex px-2 py-3 justify-between">
-                  <p className="font-bold">{item.name}</p>
-                  <span className="bg-black text-white p-1 rounded-full">
-                    Rs {item.price}
-                  </span>
+              return 0;
+            })
+            .map((item) => (
+              <Link to={`/product/${item.id}`} key={item.id}>
+                <div className=" border-white shadow-lg hover:scale-105 duration-300 rounded-t-xl">
+                  <img
+                    src={`http://localhost:5000/images/${item.image}`}
+                    alt=""
+                    className="w-full h-[200px] object-cover rounded-t-xl"
+                  />
+                  <div className="flex px-2 py-3 justify-between">
+                    <p className="font-bold">{item.name}</p>
+                    <span className="bg-black text-white p-1 rounded-full">
+                      Rs {item.price}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
-      </div>
+              </Link>
+            ))}
+        </div>
+      )}
     </div>
   );
 };
