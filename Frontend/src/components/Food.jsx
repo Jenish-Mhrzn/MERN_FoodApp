@@ -193,7 +193,7 @@ const Food = () => {
               return 0;
             })
             .map((item) => (
-              <Link to={`/product/${item.id}`} key={item.id}>
+              <Link to={`/product/${item._id}`} key={item._id}>
                 <div className=" border-white shadow-lg hover:scale-105 duration-300 rounded-t-xl">
                   <img
                     src={`http://localhost:5000/images/${item.image}`}
