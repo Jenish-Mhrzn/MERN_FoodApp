@@ -22,7 +22,7 @@ const Navbar = () => {
       {/* left side */}
       <div className="flex items-center">
         <div onClick={() => setNav(!nav)}>
-          <AiOutlineMenu size={30} className="cursor-pointer" />
+          <AiOutlineMenu size={30} className="cursor-pointer sm:hidden" />
         </div>
         <h1 className="text-2xl md:text-3xl lg:text-4xl px-2">
           Best <span className="font-bold">Eats</span>
@@ -96,28 +96,6 @@ const Navbar = () => {
                   {totalItems}
                 </span>
               )}
-            </li>
-
-            <li className="text-xl py-4 flex items-center">
-              <TbTruckDelivery size={25} className="mr-2 " /> Orders
-            </li>
-            <li className="text-xl py-4 flex items-center">
-              <MdFavorite size={25} className="mr-2 " /> Favourites
-            </li>
-            <li className="text-xl py-4 flex items-center">
-              <FaWallet size={25} className="mr-2 " /> Wallet
-            </li>
-            <li className="text-xl py-4 flex items-center">
-              <FaWallet size={25} className="mr-2 " /> Help
-            </li>
-            <li className="text-xl py-4 flex items-center">
-              <MdHelp size={25} className="mr-2 " /> Promotions
-            </li>
-            <li className="text-xl py-4 flex items-center">
-              <BsSaveFill size={25} className="mr-2 " /> Best Ones
-            </li>
-            <li className="text-xl py-4 flex items-center">
-              <FaUserFriends size={25} className="mr-2 " /> Invite Friends
             </li>
           </ul>
         </nav>
