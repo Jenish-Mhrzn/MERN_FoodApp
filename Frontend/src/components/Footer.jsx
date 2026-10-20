@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaUtensils, FaFacebookF, FaInstagram, FaGithub } from "react-icons/fa";
 import { MdEmail, MdLocationOn } from "react-icons/md";
+import logo from "../assets/Logo.png";
 
 const Footer = () => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <footer className="bg-gray-950 text-white mt-12">
       <div className="max-w-[1640px] mx-auto px-6 sm:px-10 py-10">
@@ -11,8 +13,8 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <h1 className="text-3xl font-bold flex items-center gap-2">
-              <FaUtensils className="text-orange-500" />
-              Best <span className="text-orange-500">Eats</span>
+              <img src={logo} alt="cravely" className="h-10 w-13 bg-black" />
+              <h1 className="text-2xl md:text-3xl lg:text-4xl px-2">Cravely</h1>
             </h1>
 
             <p className="text-gray-400 mt-4 leading-7">
@@ -60,7 +62,10 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="/#about" className="hover:text-orange-500 transition">
+                <a
+                  onClick={() => setIsOpen(true)}
+                  className="hover:text-orange-500 transition cursor-pointer"
+                >
                   About Us
                 </a>
               </li>
@@ -101,7 +106,7 @@ const Footer = () => {
                 href="mailto:contact@besteats.com"
                 className="hover:text-orange-500 transition"
               >
-                besteats@gmail.com
+                cravely@gmail.com
               </a>
             </div>
           </div>
@@ -109,13 +114,93 @@ const Footer = () => {
 
         {/* Bottom Footer */}
         <div className="border-t border-gray-800 mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-sm text-gray-400">
-          <p>© {new Date().getFullYear()} Best Eats. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Cravely. All rights reserved.</p>
 
           <p>
             Made with <span className="text-red-500">♥</span> for food lovers.
           </p>
         </div>
       </div>
+      {/* Background Overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      {/* Background Overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      {/* About Us Modal */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+          onClick={() => setIsOpen(false)}
+        >
+          {/* Modal Box */}
+          <div
+            className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-xl bg-[#e9e1f7] p-6 sm:p-9 text-gray-900 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="about-title"
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setIsOpen(false)}
+              className="absolute right-5 top-4 text-3xl leading-none text-gray-500 hover:text-black transition-colors"
+              aria-label="Close About Us"
+            >
+              &times;
+            </button>
+
+            {/* Modal Heading */}
+            <h2 id="about-title" className="text-2xl font-bold mb-5 pr-8">
+              About Cravely 🍽️
+            </h2>
+
+            <hr className="border-gray-300 mb-5" />
+
+            {/* About Description */}
+            <p className="text-base leading-7 mb-5">
+              At Cravely, we believe great food brings people together. Our
+              passion is serving delicious meals made with quality ingredients
+              and a whole lot of love.
+            </p>
+
+            <p className="text-base leading-7 mb-5">
+              Whether you're craving a quick bite, a satisfying meal, or
+              something special to brighten your day, we've got something for
+              everyone. We believe ordering food should be simple, convenient,
+              and enjoyable from start to finish.
+            </p>
+
+            <p className="text-base leading-7 mb-5">
+              Our goal is to bring your favorite flavors closer to you, one
+              delicious meal at a time.
+            </p>
+
+            <hr className="border-gray-300 my-5" />
+
+            {/* Footer */}
+            <div className="text-center py-2">
+              <p className="text-lg font-bold">
+                Good Food. Great Taste. Happy Moments. ❤️
+              </p>
+
+              <p className="text-sm text-gray-600 mt-3">
+                Thank you for choosing Cravely!
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </footer>
   );
 };
