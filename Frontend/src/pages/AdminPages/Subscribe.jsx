@@ -4,35 +4,65 @@ import SubsTableItem from "../../components/AdminComponents/SubsTableItem";
 
 const Subscribe = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const fetchEmailData = async () => {
-    const response = await axios.get("http://localhost:5000/email");
-    setData(response.data.data);
-    // console.log(response.data);
+    try {
+      setLoading(true);
+      setError("");
+
+      const response = await axios.get("http://localhost:5000/email");
+      setData(response.data.data);
+    } catch (err) {
+      setError("Failed to fetch subscriptions. Please try again.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const deleteEmail = async (mongoId) => {
-    const response = await axios.delete(
-      `http://localhost:5000/email/${mongoId}`,
-    );
-    console.log(response.data.data);
-    fetchEmailData();
+    try {
+      setError("");
+
+      await axios.delete(`http://localhost:5000/email/${mongoId}`);
+      await fetchEmailData();
+    } catch (err) {
+      setError("Failed to delete subscription. Please try again.");
+      console.error(err);
+    }
   };
+
   useEffect(() => {
     fetchEmailData();
   }, []);
+
   return (
     <div className="flex-1 pt-5 px-5 sm:pl-16 sm:pt-12">
-      <h1>All Subscriptions</h1>
-      <div className="relative h-[70vh] max-w-[700px] mt-4 overflow-x-auto border border-gray-400 scrollbar-hide">
-        <table className="w-full text-sm text-gray-500 ">
-          <thead className="text-sm text-gray-500 text-left uppercase bg-gray-400 sticky top-0">
+      <h1 className="text-xl font-semibold">All Subscriptions</h1>
+
+      {error && (
+        <div className="mt-4 rounded bg-red-100 p-3 text-red-600">
+          {error}
+          <button
+            onClick={fetchEmailData}
+            className="ml-3 font-semibold underline"
+          >
+            Retry
+          </button>
+        </div>
+      )}
+
+      <div className="relative mt-4 h-[70vh] max-w-[700px] overflow-x-auto border border-gray-400 scrollbar-hide">
+        <table className="w-full text-sm text-gray-500">
+          <thead className="sticky top-0 bg-gray-400 text-left text-sm text-gray-500 uppercase">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Email Subscription
               </th>
 
-              <th scope="col" className="hidden sm:table-cell px-6 py-3">
+              <th scope="col" className="hidden px-6 py-3 sm:table-cell">
                 Date
               </th>
 
@@ -41,9 +71,22 @@ const Subscribe = () => {
               </th>
             </tr>
           </thead>
+
           <tbody>
-            {data.map((item, index) => {
-              return (
+            {loading ? (
+              <tr>
+                <td colSpan="3" className="py-10 text-center text-gray-600">
+                  Loading subscriptions...
+                </td>
+              </tr>
+            ) : data.length === 0 && !error ? (
+              <tr>
+                <td colSpan="3" className="py-10 text-center text-gray-600">
+                  No subscriptions found.
+                </td>
+              </tr>
+            ) : (
+              data.map((item, index) => (
                 <SubsTableItem
                   key={item._id}
                   mongoId={item._id}
@@ -52,8 +95,8 @@ const Subscribe = () => {
                   deleteEmail={deleteEmail}
                   showBorder={index + 1 !== data.length}
                 />
-              );
-            })}
+              ))
+            )}
           </tbody>
         </table>
       </div>
