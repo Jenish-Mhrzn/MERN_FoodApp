@@ -24,14 +24,18 @@ export const createEmail = async (req, res) => {
   res.status(201).json({
     success: true,
     data,
+    message: "Email created successfully",
   });
 };
 
 export const deleteEmailById = async (req, res) => {
   const data = await EmailModel.findByIdAndDelete(req.params.id);
-
+  if (!data) {
+    res.status(400).json({ success: true, data: [] });
+  }
   res.status(200).json({
     success: true,
     data,
+    message: "Email deleted successfully",
   });
 };

@@ -3,6 +3,7 @@ import connectDB from "./config/db.js";
 import cors from "cors";
 import food from "./routes/FoodRoute.js";
 import email from "./routes/EmailRoute.js";
+import "dotenv/config";
 
 const app = express();
 app.use(express.json());
@@ -20,6 +21,6 @@ app.use("/images", express.static("uploads"));
 //Email API's
 app.use("/email", email);
 
-app.listen(5000, () => {
-  console.log("Server is listening on port:5000...");
+app.listen(process.env.PORT || 5000, () => {
+  console.log(`Server is listening on port: ${process.env.PORT || 5000}`);
 });
